@@ -5,5 +5,34 @@
   <title></title>
 </head>
 <body>
+  <main>
+    <div id="screen-area">
+      <div id="terminal">
+        <form id="character-form">
+          <div><label for="name-input">Enter your name:</label> </div>
+          <div><input type="text" name="name-input" id="name-input"></div>
+          <div><label for="class-select">Choose your class:</label></div>
+          <div>
+            <select name="class-select" id="class-select">
+              <option name="warrior" value="warrior">Warrior</option>
+              <option name="archer" value="archer">Archer</option>
+              <option name="wizard" value="wizard">Wizard</option>
+              <option name="chicken" value="chicken">Chicken</option>
+            </select>
+          </div>
+          <div>
+            <button type="submit" id="start-game-button">START</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="button-area">
+      <div id="north-button"><button type="button">Go North</button></div>
+      <div id="west-button"><button type="button">Go West</button></div>
+      <div id="context-button"><button type="button"></button></div>
+      <div id="east-button"><button type="button">Go East</button></div>
+      <div id="south-button"><button type="button">Go South</button></div>
+    </div>
+  </main>
 </body>
 </html>
