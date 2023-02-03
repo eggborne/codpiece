@@ -2,6 +2,7 @@
   --bg-color: rgb(81, 81, 81);
   --text-color: #aaa;
   --dimmed-color: rgb(49, 37, 39);
+  --screen-size: 90vw;
 }
 
 *, * *, * * * {
@@ -23,13 +24,21 @@ body {
   transition: background-color 300ms ease;
 }
 
+.terminal-title {
+  transition: transform 600ms ease;
+}
+
+span.hidden {
+  transform: translateY(-200%);
+}
+
 button, input {
   font-size: 1.5rem;
   background-color: #444;
   color: rgb(223, 223, 223);
   width: 8rem;
   height: 8rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 input, select {
@@ -40,9 +49,6 @@ input, select {
   height: 3rem;
   width: 20rem;
   padding: 0 1rem;
-}
-
-select {
 }
 
 main {
@@ -56,14 +62,16 @@ main {
 }
 
 #screen-area {
-  width: 100%;
-  flex-grow: 1;
+  width: var(--screen-size);
+  height: var(--screen-size);
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: 1px solid red;
 }
 
 #terminal {
+  position: relative;
   border-radius: 2rem;
   background-color: #222;
   width: 100%;
@@ -72,29 +80,61 @@ main {
   color: green;
   font-family: monospace;
   font-size: 1.2rem;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 3rem 2rem;
+  overflow: hidden;
+}
+
+#screen-area::after {
+  content: "";
+  position: absolute;
+  width: var(--screen-size);
+  height: var(--screen-size);
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05), transparent 40%, rgba(0, 0, 0, 0.5));
+  background-size: 100% 3px;
+  pointer-events: none;
+
 }
 
 .terminal-line {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 }
 
-form {
+.terminal-small {
+  font-size: 1rem;
+}
+
+.terminal-title {
+  font-size: 4rem;
+}
+
+#character-form {
   display: grid;
-  grid-template-rows: 1fr 1fr 1.5fr;
+  grid-template-rows: min-content min-content 1fr;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  padding-top: 2rem;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
 }
 
-form > div {
+#character-form.showing {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#character-form > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  outline: 1px solid red;
 }
 
-form > div:last-of-type {
+#character-form > div:last-of-type {
   grid-column-start: 1;
   grid-column-end: 3;
   justify-self: center;
@@ -106,6 +146,7 @@ form > div:last-of-type {
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+  flex-grow: 1;
 }
 
 #start-game-button {

@@ -1,16 +1,33 @@
 import './css/styles.css';
-import { pause } from './util.js';
+import Game from './js/Game';
+import { pause } from './util';
 
-async function renderOnTerminal(textLine, speed=40) {
-  let screen = document.getElementById('terminal');
-  let letterArray = textLine.split('');
-  let newLine = document.createElement('div');
-  newLine.classList.add('terminal-line')
-  screen.append(newLine);
-  for (const char of letterArray) {
-    newLine.innerHTML += char;
-    await pause(speed);
+window.addEventListener('load', async () => {
+  let game = new Game();
+  await game.renderOnTerminal('CODPIECE', {
+    tag: 'span',
+    className: 'terminal-title',
+    targetQuery: '#terminal',
+    speed: 100,
+    prepend: true
+  });
+  await pause(300);
+  document.getElementById('character-form').style.display = 'grid';
+  await pause(1);
+  document.getElementById('character-form').classList.add('showing');
+
+
+  document.getElementById('start-game-button').addEventListener('click', async (e) => {
+    e.preventDefault();
+    await game.clearTitleScreen();
+    await pause(500);
+    game.showRegion('Starting Area');
+  });
+
+  for (const button of document.getElementsByClassName('nav-button')) {
+    button.addEventListener('click', () => {
+      document.getElementById('terminal').innerHTML = '';
+      game.showRegion(game.getRandomRegion());
+    })
   }
-}
-
-// renderOnTerminal('I have a brass waterbed')
+});
